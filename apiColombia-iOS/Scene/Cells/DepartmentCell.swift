@@ -26,7 +26,7 @@ class DepartmentCell: UITableViewCell {
         config.secondaryText = description
         config.textProperties.font = .systemFont(ofSize: 16, weight: .medium)
         config.secondaryTextProperties.color = .secondaryLabel
-        config.secondaryTextProperties.numberOfLines = 2
+        config.secondaryTextProperties.numberOfLines = 1
         contentConfiguration = config
     }
 }

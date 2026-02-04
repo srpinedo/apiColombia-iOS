@@ -83,6 +83,8 @@ extension DepartmentsViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("Seleccionado: \(viewModel.item(at: indexPath.row))")
+        let selectDept = viewModel.item(at: indexPath.row)
+        let detailVC = DepartmentDetailViewController(department: selectDept)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
