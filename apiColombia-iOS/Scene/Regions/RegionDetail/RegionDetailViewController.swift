@@ -1,5 +1,5 @@
 //
-//  DepartmentDetailViewController.swift
+//  RegionDetailViewController.swift
 //  apiColombia-iOS
 //
 //  Created by Joan on 4/02/26.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class DepartmentDetailViewController: UIViewController {
+class RegionDetailViewController: UIViewController {
     
-    private let department: Department
+    private let region: Region
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -27,8 +27,8 @@ class DepartmentDetailViewController: UIViewController {
         return stackView
     }()
     
-    init(department: Department) {
-        self.department = department
+    init(region: Region) {
+        self.region = region
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,7 +39,7 @@ class DepartmentDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = department.name
+        title = region.name
         setupUI()
         infoDept()
     }
@@ -67,7 +67,7 @@ class DepartmentDetailViewController: UIViewController {
         stackView.addArrangedSubview(descTitle)
         
         let descBody = UILabel()
-        descBody.text = department.description
+        descBody.text = region.description
         descBody.numberOfLines = 0
         descBody.font = .systemFont(ofSize: 16)
         descBody.textColor = .secondaryLabel
@@ -76,3 +76,5 @@ class DepartmentDetailViewController: UIViewController {
         stackView.addArrangedSubview(UIView())
     }
 }
+
+

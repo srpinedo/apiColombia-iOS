@@ -1,5 +1,5 @@
 //
-//  DepartmentCell.swift
+//  UniversalCell.swift
 //  apiColombia-iOS
 //
 //  Created by Joan on 3/02/26.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class DepartmentCell: UITableViewCell {
-    static let identifier = "DepartmentCell"
+class UniversalCell: UITableViewCell {
+    static let identifier = "UniversalCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)

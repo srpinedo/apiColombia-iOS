@@ -12,9 +12,9 @@ class DepartmentsViewModel {
     
     private let repository: ColombiaNetworkType
     
-    private var allDepartments: [Deparment] = []
+    private var allDepartments: [Department] = []
     
-    private(set) var filteredDepartments: [Deparment] = []
+    private(set) var filteredDepartments: [Department] = []
     
     var onReloadData: (() -> Void)?
     
@@ -36,7 +36,7 @@ class DepartmentsViewModel {
     
     var count: Int { filteredDepartments.count }
     
-    func item(at index: Int) -> Deparment {
+    func item(at index: Int) -> Department {
         return filteredDepartments[index]
     }
     

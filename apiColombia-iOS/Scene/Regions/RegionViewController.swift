@@ -1,16 +1,15 @@
 //
-//  DepartmentsViewController.swift
+//  RegionViewController.swift
 //  apiColombia-iOS
 //
-//  Created by Joan on 3/02/26.
+//  Created by Joan on 4/02/26.
 //
 
 import UIKit
 
-class DepartmentsViewController: UIViewController {
-    
-    private let viewModel = DepartmentsViewModel()
-    
+class RegionViewController: UIViewController {
+    private let viewModel = RegionViewModel()
+
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
         sc.searchResultsUpdater = self
@@ -32,16 +31,8 @@ class DepartmentsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         viewModel.loadData()
-        setupNavigation()
         setupUI()
-    }
-    
-    private func setupNavigation() {
-        title = "Departamentos"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        definesPresentationContext = true
+        setupNavigation()
     }
     
     private func setupUI() {
@@ -54,18 +45,28 @@ class DepartmentsViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    private func setupNavigation() {
+        title = "Regiones"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+    }
 }
+
 // MARK: - Update Search Results
-extension DepartmentsViewController: UISearchResultsUpdating {
+extension RegionViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let query = searchController.searchBar.text
-        viewModel.filter(query: query)
+        viewModel.filterRegions(query: query)
         
         tableView.reloadData()
     }
 }
+
 // MARK: - TableView DataSource & Delegate
-extension DepartmentsViewController: UITableViewDataSource, UITableViewDelegate {
+extension RegionViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.count
@@ -76,15 +77,15 @@ extension DepartmentsViewController: UITableViewDataSource, UITableViewDelegate 
             return UITableViewCell()
         }
         
-        let department = viewModel.item(at: indexPath.row)
+        let department = viewModel.region(at: indexPath.row)
         cell.configure(name: department.name, description: department.description)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectDept = viewModel.item(at: indexPath.row)
-        let detailVC = DepartmentDetailViewController(department: selectDept)
+        let selectRegion = viewModel.region(at: indexPath.row)
+        let detailVC = RegionDetailViewController(region: selectRegion*)
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }

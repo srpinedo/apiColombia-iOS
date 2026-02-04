@@ -13,8 +13,8 @@ struct DepartmentResponse: Decodable {
     let description: String?
     let cityCapitalId: Int?
     
-    func toDomain() -> Deparment {
-        return Deparment(
+    func toDomain() -> Department {
+        return Department(
             id: id,
             name: name,
             description: description ?? "",
