@@ -7,27 +7,24 @@
 
 import UIKit
 
+@objc(SceneDelegate)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // 1. Capturamos la escena de ventana
-        guard let windowScene = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else {
+            print("❌ Fallo cast UIWindowScene")
+
+            return }
         
-        // 2. Creamos la ventana manual con esa escena
         let window = UIWindow(windowScene: windowScene)
         
-        // 3. Definimos un ViewController temporal para probar
-        let initialVC = UIViewController()
-        initialVC.view.backgroundColor = .systemBlue // Color para confirmar que es nuestra vista
-        
-        // 4. Asignamos el root y mostramos la ventana
+        let initialVC = MainTabBarController()   
         window.rootViewController = initialVC
         window.makeKeyAndVisible()
         
-        // 5. Guardamos la referencia global
         self.window = window
     }
     

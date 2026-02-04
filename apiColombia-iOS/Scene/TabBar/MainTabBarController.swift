@@ -1,0 +1,40 @@
+//
+//  MainTabBarController.swift
+//  apiColombia-iOS
+//
+//  Created by Joan on 3/02/26.
+//
+
+import UIKit
+
+class MainTabBarController: UITabBarController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
+        setupAppearance()
+    }
+    
+    private func setup() {
+        let home = createTab(viewController: HomeViewController(), title: "Inicio", img: "house")
+        
+        self.viewControllers = [home]
+    }
+    
+    private func createTab(viewController: UIViewController, title: String, img: String) -> UIViewController {
+        
+        let nav = UINavigationController(rootViewController: viewController)
+        nav.tabBarItem.image = UIImage(named: img)?.withRenderingMode(.alwaysOriginal)
+
+        nav.tabBarItem.image = UIImage(systemName: img)
+        nav.tabBarItem.selectedImage = UIImage(systemName: img + ".fill")
+        viewController.title = title
+        viewController.view.backgroundColor = .white
+        return nav
+    }
+    
+    private func setupAppearance() {
+        tabBar.tintColor = .systemBlue
+        tabBar.backgroundColor = .systemBackground
+    }
+}
