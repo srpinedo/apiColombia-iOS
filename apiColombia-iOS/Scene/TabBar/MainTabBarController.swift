@@ -18,7 +18,9 @@ class MainTabBarController: UITabBarController {
     private func setup() {
         let home = createTab(viewController: HomeViewController(), title: "Inicio", img: "house")
         
-        self.viewControllers = [home]
+        let departments = createTab(viewController: DepartmentsViewController(), title: "Departamentos", img: "list.bullet")
+        
+        self.viewControllers = [home, departments]
     }
     
     private func createTab(viewController: UIViewController, title: String, img: String) -> UIViewController {
