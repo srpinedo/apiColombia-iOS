@@ -22,4 +22,10 @@ class ColombiaNetwork: ColombiaNetworkType {
         return response.map { $0.toDomain() }
     }
     
+    // MARK: - Festivos
+    func getHolidays(year: Int) async throws -> [Holiday] {
+        let response: [HolidayResponse] = try await api.request(APIEndpoint.allHolidays(year: year))
+        return response.map { $0.toDomain() }
+    }
+    
 }

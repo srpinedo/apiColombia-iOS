@@ -1,10 +1,3 @@
-//
-//  APIClient.swift
-//  apiColombia-iOS
-//
-//  Created by Joan on 4/02/26.
-//
-
 import Foundation
 
 protocol APIClientType {
@@ -24,6 +17,7 @@ class APIClient: APIClientType {
     func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
         
         guard let url = endpoint.url else {
+            print("❌ [API] Error: URL inválida para endpoint: \(endpoint.path)")
             throw NetworkError.invalidURL
         }
         
@@ -31,20 +25,36 @@ class APIClient: APIClientType {
         request.httpMethod = endpoint.method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let (data, response) = try await urlSession.data(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode) else {
-            let code = (response as? HTTPURLResponse)?.statusCode ?? 0
-            throw NetworkError.serverError(code)
-        }
+        print("\n🚀 [REQUEST] \(endpoint.method) \(url.absoluteString)")
         
         do {
+            let (data, response) = try await urlSession.data(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("❌ [ERROR] Respuesta no es HTTP")
+                throw NetworkError.invalidResponse
+            }
+            
+            print("📥 [RESPONSE] Status Code: \(httpResponse.statusCode)")
+            
+            guard (200...299).contains(httpResponse.statusCode) else {
+                print("❌ [FAILURE] Server Error: \(httpResponse.statusCode)")
+                throw NetworkError.serverError(httpResponse.statusCode)
+            }
+            
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("📦 [DATA]: \(jsonString)")
+            }
+            
             let decoder = JSONDecoder()
-            return try decoder.decode(T.self, from: data)
+            let decodedObject = try decoder.decode(T.self, from: data)
+            
+            print("✅ [SUCCESS] Decodificado correctamente a \(T.self)")
+            return decodedObject
+            
         } catch {
-            print("Error decodificando: \(error)")
-            throw NetworkError.decodingFailed(error)
+            print("❌ [FAILURE] Error en la petición: \(error)")
+            throw NetworkError.requestFailed(error)
         }
     }
 }

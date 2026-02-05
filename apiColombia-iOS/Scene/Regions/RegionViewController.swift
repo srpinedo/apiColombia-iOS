@@ -85,7 +85,7 @@ extension RegionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectRegion = viewModel.region(at: indexPath.row)
-        let detailVC = RegionDetailViewController(region: selectRegion*)
+        let detailVC = RegionDetailViewController(region: selectRegion)
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }

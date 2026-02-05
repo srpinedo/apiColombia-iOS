@@ -22,7 +22,9 @@ class MainTabBarController: UITabBarController {
         
         let region = createTab(viewController: RegionViewController(), title: "Region", img: "list.bullet")
         
-        self.viewControllers = [home, departments, region]
+        let holidays = createTab(viewController: HolidaysViewController(), title: "Festivos", img: "list.bullet")
+        
+        self.viewControllers = [home, departments, region, holidays]
     }
     
     private func createTab(viewController: UIViewController, title: String, img: String) -> UIViewController {

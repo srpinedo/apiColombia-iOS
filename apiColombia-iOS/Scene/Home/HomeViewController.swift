@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGroupedBackground
-        title = "API Colombia"
+        title = "Inicio"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         setupUI()
