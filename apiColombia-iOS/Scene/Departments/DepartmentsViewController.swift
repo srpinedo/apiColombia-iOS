@@ -28,12 +28,40 @@ class DepartmentsViewController: UIViewController {
         return tv
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView(style: .large)
+        ai.hidesWhenStopped = true
+        ai.translatesAutoresizingMaskIntoConstraints = false
+        return ai
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        viewModel.loadData()
         setupNavigation()
         setupUI()
+        bindViewModel()
+        viewModel.loadData()
+    }
+    
+    private func bindViewModel() {
+        viewModel.onReloadData = { [weak self] in
+            self?.tableView.reloadData()
+        }
+        
+        viewModel.onLoading = { [weak self] isLoading in
+            DispatchQueue.main.async {
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+                    self?.tableView.alpha = 0
+                } else {
+                    self?.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2) {
+                        self?.tableView.alpha = 1
+                    }
+                }
+            }
+        }
     }
     
     private func setupNavigation() {
@@ -46,12 +74,16 @@ class DepartmentsViewController: UIViewController {
     
     private func setupUI() {
         view.addSubview(tableView)
+        view.addSubview(activityIndicator)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }

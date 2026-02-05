@@ -17,13 +17,16 @@ class RegionViewModel {
     private(set) var filteredRegions: [Region] = []
     
     var onReloadData: (() -> Void)?
+    var onLoading: ((Bool) -> Void)?
     
     init(repository: ColombiaNetworkType = ColombiaNetwork.shared) {
         self.repository = repository
     }
     
     func loadData() {
+        onLoading?(true)
         Task {
+            defer { onLoading?(false) }
             do {
                 allRegions = try await repository.getRegions()
                 filteredRegions = allRegions

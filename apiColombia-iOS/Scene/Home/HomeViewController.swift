@@ -70,6 +70,22 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = viewModel.item(at: indexPath)
-        print("Tapped: \(item.title)")
+        
+        var destinationVC: UIViewController?
+        
+        switch item.type {
+        case .departments:
+            destinationVC = DepartmentsViewController()
+        case .regions:
+            destinationVC = RegionViewController()
+        case .holidays:
+            destinationVC = HolidaysViewController()
+        case .tourism:
+            print("Turismo Coming Soon")
+        }
+        
+        if let vc = destinationVC {
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

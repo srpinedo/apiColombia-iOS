@@ -17,13 +17,16 @@ class DepartmentsViewModel {
     private(set) var filteredDepartments: [Department] = []
     
     var onReloadData: (() -> Void)?
+    var onLoading: ((Bool) -> Void)?
     
     init(repository: ColombiaNetworkType = ColombiaNetwork.shared) {
         self.repository = repository
     }
     
     func loadData() {
+        onLoading?(true)
         Task {
+            defer { onLoading?(false) }
             do {
                 allDepartments = try await repository.getDepartments()
                 filteredDepartments = allDepartments

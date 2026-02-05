@@ -16,6 +16,7 @@ class HolidaysViewModel {
     private(set) var currentYear: Int = Calendar.current.component(.year, from: Date())
     
     var onReloadData: (() -> Void)?
+    var onLoading: ((Bool) -> Void)?
     
     init(repository: ColombiaNetworkType = ColombiaNetwork.shared) {
         self.repository = repository
@@ -26,7 +27,10 @@ class HolidaysViewModel {
             self.currentYear = year
         }
         
+        onLoading?(true)
+        
         Task {
+            defer { onLoading?(false) } 
             do {
                 allHolidays = try await repository.getHolidays(year: currentYear)
                 onReloadData?()
