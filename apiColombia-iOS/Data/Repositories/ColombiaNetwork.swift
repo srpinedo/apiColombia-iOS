@@ -28,4 +28,10 @@ class ColombiaNetwork: ColombiaNetworkType {
         return response.map { $0.toDomain() }
     }
     
+    // MARK: - Turismo
+    func getAttractions() async throws -> [TouristAttraction] {
+        let response: [TouristAttractionResponse] = try await api.request(APIEndpoint.allAttractions)
+        return response.map { $0.toDomain() }
+    }
+    
 }

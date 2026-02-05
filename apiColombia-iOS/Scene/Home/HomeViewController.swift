@@ -81,7 +81,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         case .holidays:
             destinationVC = HolidaysViewController()
         case .tourism:
-            print("Turismo Coming Soon")
+            destinationVC = TourismViewController()
         }
         
         if let vc = destinationVC {

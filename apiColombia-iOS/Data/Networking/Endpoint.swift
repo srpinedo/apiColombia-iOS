@@ -31,12 +31,14 @@ enum APIEndpoint: Endpoint {
     case allDepartments
     case allRegions
     case allHolidays(year: Int)
+    case allAttractions
     
     var path: String {
         switch self {
         case .allDepartments: return "/Department"
         case .allRegions: return "/Region"
         case .allHolidays(let year): return "/Holiday/year/\(year)"
+        case .allAttractions: return "/TouristicAttraction"
         }
     }
 }
